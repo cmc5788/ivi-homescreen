@@ -205,7 +205,7 @@ DEF_SWITCH(DomainNetworkPolicy,
 DEF_SWITCH(
     ForceMultithreading,
     "force-multithreading",
-    "Uses separate threads for the platform, UI, GPU and IO task runners. "
+    "Uses separate threads for the runtime, UI, GPU and IO task runners. "
     "By default, a single thread is used for all task runners. Only available "
     "in the flutter_tester.")
 DEF_SWITCH(OldGenHeapSize,

@@ -20,7 +20,7 @@ std::pair<bool, std::string> GetExecutablePath() {
 }
 
 fml::UniqueFD GetCachesDirectory() {
-  // Unsupported on this platform.
+  // Unsupported on this runtime.
   return {};
 }
 

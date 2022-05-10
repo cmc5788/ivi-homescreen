@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// This file adds defines about the platform we're currently building on.
+// This file adds defines about the runtime we're currently building on.
 //  Operating System:
 //    OS_WIN / OS_MACOSX / OS_LINUX / OS_POSIX (MACOSX or LINUX) /
 //    OS_NACL (NACL_SFI or NACL_NONSFI) / OS_NACL_SFI / OS_NACL_NONSFI
@@ -47,7 +47,7 @@
 #elif defined(__QNXNTO__)
 #define OS_QNX 1
 #else
-#error Please add support for your platform in flutter/fml/build_config.h
+#error Please add support for your runtime in flutter/fml/build_config.h
 #endif
 
 // For access to standard BSD features, use OS_BSD instead of a

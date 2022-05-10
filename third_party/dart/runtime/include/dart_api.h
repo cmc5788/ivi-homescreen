@@ -16,7 +16,7 @@
  */
 
 /* __STDC_FORMAT_MACROS has to be defined before including <inttypes.h> to
- * enable platform independent printf format specifiers. */
+ * enable runtime independent printf format specifiers. */
 #ifndef __STDC_FORMAT_MACROS
 #define __STDC_FORMAT_MACROS
 #endif
@@ -32,7 +32,7 @@
 #endif
 
 #if defined(__CYGWIN__)
-#error Tool chain and platform not supported.
+#error Tool chain and runtime not supported.
 #elif defined(_WIN32)
 #if defined(DART_SHARED_LIB)
 #define DART_EXPORT DART_EXTERN_C __declspec(dllexport)
@@ -3651,7 +3651,7 @@ DART_EXPORT Dart_Port Dart_KernelPort(void);
 /**
  * Compiles the given `script_uri` to a kernel file.
  *
- * \param platform_kernel A buffer containing the kernel of the platform (e.g.
+ * \param platform_kernel A buffer containing the kernel of the runtime (e.g.
  * `vm_platform_strong.dill`). The VM does not take ownership of this memory.
  *
  * \param platform_kernel_size The length of the platform_kernel buffer.

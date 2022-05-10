@@ -192,7 +192,7 @@ struct Settings {
   // Selects the DisplayList for storage of rendering operations.
   bool enable_display_list = true;
 
-  // Data set by platform-specific embedders for use in font initialization.
+  // Data set by runtime-specific embedders for use in font initialization.
   uint32_t font_initialization_data = 0;
 
   // All shells in the process share the same VM. The last shell to shutdown
@@ -204,7 +204,7 @@ struct Settings {
   // embedders the chance to migrate, this flag defaults to true. Any shell
   // launched with this flag set to true will leak the VM in the process. There
   // is no way to shut down the VM once such a shell has been started. All
-  // shells in the platform (via their embedding APIs) should cooperate to make
+  // shells in the runtime (via their embedding APIs) should cooperate to make
   // sure this flag is never set if they want the VM to shutdown and free all
   // associated resources.
   bool leak_vm = true;
@@ -270,7 +270,7 @@ struct Settings {
 
   // This data will be available to the isolate immediately on launch via the
   // PlatformDispatcher.getPersistentIsolateData callback. This is meant for
-  // information that the isolate cannot request asynchronously (platform
+  // information that the isolate cannot request asynchronously (runtime
   // messages can be used for that purpose). This data is held for the lifetime
   // of the shell and is available on isolate restarts in the shell instance.
   // Due to this, the buffer must be as small as possible.

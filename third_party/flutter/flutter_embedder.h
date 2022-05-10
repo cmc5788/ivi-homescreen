@@ -78,13 +78,13 @@ typedef enum {
   kMetal,
 } FlutterRendererType;
 
-/// Additional accessibility features that may be enabled by the platform.
+/// Additional accessibility features that may be enabled by the runtime.
 /// Must match the `AccessibilityFeatures` enum in window.dart.
 typedef enum {
   /// Indicate there is a running accessibility service which is changing the
   /// interaction model of the device.
   kFlutterAccessibilityFeatureAccessibleNavigation = 1 << 0,
-  /// Indicate the platform is inverting the colors of the application.
+  /// Indicate the runtime is inverting the colors of the application.
   kFlutterAccessibilityFeatureInvertColors = 1 << 1,
   /// Request that animations be disabled or simplified.
   kFlutterAccessibilityFeatureDisableAnimations = 1 << 2,
@@ -194,7 +194,7 @@ typedef enum {
   /// If true, the semantics node is "on". If false, the semantics node is
   /// "off".
   kFlutterSemanticsFlagIsToggled = 1 << 17,
-  /// Whether the platform can scroll the semantics node when the user attempts
+  /// Whether the runtime can scroll the semantics node when the user attempts
   /// to move the accessibility focus to an offscreen child.
   ///
   /// For example, a `ListView` widget has implicit scrolling so that users can
@@ -735,7 +735,7 @@ typedef struct {
   /// The embedder is likely to skip events and/or construct new events that do
   /// not correspond to any native events in order to conform the regularity
   /// of events (as documented in `FlutterKeyEvent`). An example is when a key
-  /// up is missed due to loss of window focus, on a platform that provides
+  /// up is missed due to loss of window focus, on a runtime that provides
   /// query to key pressing status, the embedder might realize that the key has
   /// been released at the next key event, and should construct a synthesized up
   /// event immediately before the actual event.
@@ -775,8 +775,8 @@ typedef void (*FlutterDataCallback)(const uint8_t* /* data */,
                                     size_t /* size */,
                                     void* /* user data */);
 
-/// The identifier of the platform view. This identifier is specified by the
-/// application when a platform view is added to the scene via the
+/// The identifier of the runtime view. This identifier is specified by the
+/// application when a runtime view is added to the scene via the
 /// `SceneBuilder.addPlatformView` call.
 typedef int64_t FlutterPlatformViewIdentifier;
 
@@ -851,7 +851,7 @@ typedef struct {
   /// Array of `FlutterSemanticsCustomAction` IDs associated with this node.
   /// Has length `custom_accessibility_actions_count`.
   const int32_t* custom_accessibility_actions;
-  /// Identifier of the platform view associated with this semantics node, or
+  /// Identifier of the runtime view associated with this semantics node, or
   /// -1 if none.
   FlutterPlatformViewIdentifier platform_view_id;
 } FlutterSemanticsNode;
@@ -938,12 +938,12 @@ typedef struct {
   size_t struct_size;
   /// Specify the task runner for the thread on which the `FlutterEngineRun`
   /// call is made. The same task runner description can be specified for both
-  /// the render and platform task runners. This makes the Flutter engine use
+  /// the render and runtime task runners. This makes the Flutter engine use
   /// the same thread for both task runners.
   const FlutterTaskRunnerDescription* platform_task_runner;
   /// Specify the task runner for the thread on which the render tasks will be
   /// run. The same task runner description can be specified for both the render
-  /// and platform task runners. This makes the Flutter engine use the same
+  /// and runtime task runners. This makes the Flutter engine use the same
   /// thread for both task runners.
   const FlutterTaskRunnerDescription* render_task_runner;
 } FlutterCustomTaskRunners;
@@ -991,15 +991,15 @@ typedef struct {
 
 typedef enum {
   /// Indicates that the Flutter application requested that an opacity be
-  /// applied to the platform view.
+  /// applied to the runtime view.
   kFlutterPlatformViewMutationTypeOpacity,
-  /// Indicates that the Flutter application requested that the platform view be
+  /// Indicates that the Flutter application requested that the runtime view be
   /// clipped using a rectangle.
   kFlutterPlatformViewMutationTypeClipRect,
-  /// Indicates that the Flutter application requested that the platform view be
+  /// Indicates that the Flutter application requested that the runtime view be
   /// clipped using a rounded rectangle.
   kFlutterPlatformViewMutationTypeClipRoundedRect,
-  /// Indicates that the Flutter application requested that the platform view be
+  /// Indicates that the Flutter application requested that the runtime view be
   /// transformed before composition.
   kFlutterPlatformViewMutationTypeTransformation,
 } FlutterPlatformViewMutationType;
@@ -1018,17 +1018,17 @@ typedef struct {
 typedef struct {
   /// The size of this struct. Must be sizeof(FlutterPlatformView).
   size_t struct_size;
-  /// The identifier of this platform view. This identifier is specified by the
-  /// application when a platform view is added to the scene via the
+  /// The identifier of this runtime view. This identifier is specified by the
+  /// application when a runtime view is added to the scene via the
   /// `SceneBuilder.addPlatformView` call.
   FlutterPlatformViewIdentifier identifier;
-  /// The number of mutations to be applied to the platform view by the embedder
+  /// The number of mutations to be applied to the runtime view by the embedder
   /// before on-screen composition.
   size_t mutations_count;
-  /// The mutations to be applied by this platform view before it is composited
-  /// on-screen. The Flutter application may transform the platform view but
+  /// The mutations to be applied by this runtime view before it is composited
+  /// on-screen. The Flutter application may transform the runtime view but
   /// these transformations cannot be affected by the Flutter compositor because
-  /// it does not render platform views. Since the embedder is responsible for
+  /// it does not render runtime views. Since the embedder is responsible for
   /// composition of these views, it is also the embedder's responsibility to
   /// affect the appropriate transformation.
   ///
@@ -1295,7 +1295,7 @@ typedef struct {
 /// able to tweak the thread priorities for optimum performance.
 typedef enum {
   /// The Flutter Engine considers the thread on which the FlutterEngineRun call
-  /// is made to be the platform thread. There is only one such thread per
+  /// is made to be the runtime thread. There is only one such thread per
   /// engine instance.
   kFlutterNativeThreadTypePlatform,
   /// This is the thread the Flutter Engine uses to execute rendering commands
@@ -1395,7 +1395,7 @@ typedef struct {
   /// `switches.h` engine source file.
   const char* const* command_line_argv;
   /// The callback invoked by the engine in order to give the embedder the
-  /// chance to respond to platform messages from the Dart application.
+  /// chance to respond to runtime messages from the Dart application.
   /// The callback will be invoked on the thread on which the `FlutterEngineRun`
   /// call is made. The second parameter, `user_data`, is supplied when
   /// `FlutterEngineRun` or `FlutterEngineInitialize` is called.
@@ -1468,7 +1468,7 @@ typedef struct {
   bool is_persistent_cache_read_only;
 
   /// A callback that gets invoked by the engine when it attempts to wait for a
-  /// platform vsync event. The engine will give the platform a baton that needs
+  /// runtime vsync event. The engine will give the runtime a baton that needs
   /// to be returned back to the engine via `FlutterEngineOnVsync`. All batons
   /// must be retured to the engine before initializing a
   /// `FlutterEngineShutdown`. Not doing the same will result in a memory leak.
@@ -1513,7 +1513,7 @@ typedef struct {
 
   /// Typically, Flutter renders the layer hierarchy into a single root surface.
   /// However, when embedders need to interleave their own contents within the
-  /// Flutter layer hierarchy, their applications can push platform views within
+  /// Flutter layer hierarchy, their applications can push runtime views within
   /// the Flutter scene. This is done using the `SceneBuilder.addPlatformView`
   /// call. When this happens, the Flutter rasterizer divides the effective view
   /// hierarchy into multiple layers. Each layer gets its own backing store and
@@ -1542,14 +1542,14 @@ typedef struct {
   /// Embedders can provide either snapshot buffers or aot_data, but not both.
   FlutterEngineAOTData aot_data;
 
-  /// A callback that computes the locale the platform would natively resolve
+  /// A callback that computes the locale the runtime would natively resolve
   /// to.
   ///
   /// The input parameter is an array of FlutterLocales which represent the
   /// locales supported by the app. One of the input supported locales should
   /// be selected and returned to best match with the user/device's preferred
   /// locale. The implementation should produce a result that as closely
-  /// matches what the platform would natively resolve to as possible.
+  /// matches what the runtime would natively resolve to as possible.
   FlutterComputePlatformResolvedLocaleCallback
       compute_platform_resolved_locale_callback;
 
@@ -1777,7 +1777,7 @@ FlutterEngineResult FlutterEngineSendPlatformMessage(
     const FlutterPlatformMessage* message);
 
 //------------------------------------------------------------------------------
-/// @brief     Creates a platform message response handle that allows the
+/// @brief     Creates a runtime message response handle that allows the
 ///            embedder to set a native callback for a response to a message.
 ///            This handle may be set on the `response_handle` field of any
 ///            `FlutterPlatformMessage` sent to the engine.
@@ -1785,7 +1785,7 @@ FlutterEngineResult FlutterEngineSendPlatformMessage(
 ///            The handle must be collected via a call to
 ///            `FlutterPlatformMessageReleaseResponseHandle`. This may be done
 ///            immediately after a call to `FlutterEngineSendPlatformMessage`
-///            with a platform message whose response handle contains the handle
+///            with a runtime message whose response handle contains the handle
 ///            created using this call. In case a handle is created but never
 ///            sent in a message, the release call must still be made. Not
 ///            calling release on the handle results in a small memory leak.
@@ -1819,7 +1819,7 @@ FlutterEngineResult FlutterPlatformMessageCreateResponseHandle(
 /// @see        FlutterPlatformMessageCreateResponseHandle()
 ///
 /// @param[in]  engine     A running engine instance.
-/// @param[in]  response   The platform message response handle to collect.
+/// @param[in]  response   The runtime message response handle to collect.
 ///                        These handles are created using
 ///                        `FlutterPlatformMessageCreateResponseHandle()`.
 ///
@@ -1831,14 +1831,14 @@ FlutterEngineResult FlutterPlatformMessageReleaseResponseHandle(
     FlutterPlatformMessageResponseHandle* response);
 
 //------------------------------------------------------------------------------
-/// @brief      Send a response from the native side to a platform message from
+/// @brief      Send a response from the native side to a runtime message from
 ///             the Dart Flutter application.
 ///
 /// @param[in]  engine       The running engine instance.
-/// @param[in]  handle       The platform message response handle.
-/// @param[in]  data         The data to associate with the platform message
+/// @param[in]  handle       The runtime message response handle.
+/// @param[in]  data         The data to associate with the runtime message
 ///                          response.
-/// @param[in]  data_length  The length of the platform message response data.
+/// @param[in]  data_length  The length of the runtime message response data.
 ///
 /// @return     The result of the call.
 ///
@@ -1975,7 +1975,7 @@ FlutterEngineResult FlutterEngineDispatchSemanticsAction(
 
 //------------------------------------------------------------------------------
 /// @brief      Notify the engine that a vsync event occurred. A baton passed to
-///             the platform via the vsync callback must be returned. This call
+///             the runtime via the vsync callback must be returned. This call
 ///             must be made on the thread on which the call to
 ///             `FlutterEngineRun` was made.
 ///
@@ -2151,7 +2151,7 @@ bool FlutterEngineRunsAOTCompiledDartCode(void);
 ///             ensure the call is not made when no engine (and hence no VM) is
 ///             running.
 ///
-///             Unlike the platform messages mechanism, there are no threading
+///             Unlike the runtime messages mechanism, there are no threading
 ///             restrictions when using this API. Message can be posted on any
 ///             thread and they will be made available to isolate on which the
 ///             corresponding send port is listening.

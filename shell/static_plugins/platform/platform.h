@@ -21,7 +21,7 @@
 
 class Platform {
  public:
-  static constexpr char kChannelName[] = "flutter/platform";
+  static constexpr char kChannelName[] = "flutter/runtime";
   static void OnPlatformMessage(const FlutterPlatformMessage* message,
                                 void* userdata);
 

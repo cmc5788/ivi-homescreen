@@ -20,6 +20,7 @@
 
 #include <flutter/fml/command_line.h>
 #include <flutter/fml/logging.h>
+#include <bin/platform.h>
 
 volatile bool running = true;
 
@@ -133,6 +134,21 @@ int main(int argc, char** argv) {
   }
   FML_DLOG(INFO) << "Screen Width: " << width;
   FML_DLOG(INFO) << "Screen Height: " << height;
+
+  // Dart VM Platform code
+  char hostname[64];
+  if(dart::bin::Platform::LocalHostname(hostname, sizeof(hostname))) {
+    FML_LOG(INFO) << "Local Hostname: " << hostname;
+  }
+  FML_LOG(INFO) << "OS: " << dart::bin::Platform::OperatingSystem();
+  FML_LOG(INFO) << "OS Version: " << dart::bin::Platform::OperatingSystemVersion();
+  FML_LOG(INFO) << "Host Architecture: " << dart::bin::Platform::HostArchitecture();
+  FML_LOG(INFO) << "Number of Processors: " << dart::bin::Platform::NumberOfProcessors();
+  FML_LOG(INFO) << "Locale Name: " << dart::bin::Platform::LocaleName();
+  FML_LOG(INFO) << "Library Prefix: " << dart::bin::Platform::LibraryPrefix();
+  FML_LOG(INFO) << "Library Extension: " << dart::bin::Platform::LibraryExtension();
+  FML_LOG(INFO) << "Resolved Executable Name: " << dart::bin::Platform::GetResolvedExecutableName();
+  FML_LOG(INFO) << "Resolve Executable Path: " << dart::bin::Platform::ResolveExecutablePath();
 
   App app("homescreen", args, application_override_path, fullscreen,
           !disable_cursor, debug_egl, width, height, cursor_theme);

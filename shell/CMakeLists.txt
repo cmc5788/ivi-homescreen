@@ -56,12 +56,12 @@ set(SRC_FILES
         textures/texture.cc
 
         ../third_party/flutter/shell/platform/common/client_wrapper/core_implementations.cc
-        #../third_party/flutter/shell/platform/common/client_wrapper/plugin_registrar.cc
+        #../third_party/flutter/shell/runtime/common/client_wrapper/plugin_registrar.cc
         ../third_party/flutter/shell/platform/common/client_wrapper/standard_codec.cc
         ../third_party/flutter/shell/platform/common/json_message_codec.cc
         ../third_party/flutter/shell/platform/common/json_method_codec.cc
         ../third_party/flutter/shell/platform/common/path_utils.cc
-        #../third_party/flutter/shell/platform/common/text_editing_delta.cc
+        #../third_party/flutter/shell/runtime/common/text_editing_delta.cc
         ../third_party/flutter/shell/platform/common/text_input_model.cc
 
         ${WAYLAND_PROTOCOL_SOURCES}
@@ -80,6 +80,13 @@ set(SRC_FILES
         ../third_party/flutter/fml/logging.cc
         ../third_party/flutter/fml/paths.cc
         ../third_party/flutter/fml/unique_fd.cc
+
+        runtime/bin/file.cc
+        runtime/bin/file_linux.cc
+        runtime/bin/platform.cc
+        runtime/bin/platform_linux.cc
+        runtime/platform/utils.cc
+        runtime/platform/utils_linux.cc
         )
 
 add_executable(homescreen ${SRC_FILES})
@@ -111,6 +118,9 @@ include_directories(
         ../third_party/flutter/shell/platform/common/public
         ../third_party/flutter/shell/platform/common/client_wrapper/include
         ../third_party/rapidjson/include
+
+        runtime
+        runtime/include
 )
 
 target_link_libraries(homescreen PRIVATE

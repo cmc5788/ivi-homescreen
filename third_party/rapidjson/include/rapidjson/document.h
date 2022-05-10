@@ -93,7 +93,7 @@ struct GenericMember {
         e.g. from GenericValue::FindMember.
 
     \note Define \c RAPIDJSON_NOMEMBERITERATORCLASS to fall back to a
-        pointer-based implementation, if your platform doesn't provide
+        pointer-based implementation, if your runtime doesn't provide
         the C++ <iterator> header.
 
     \see GenericMember, GenericValue::MemberIterator, GenericValue::ConstMemberIterator

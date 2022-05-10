@@ -30,7 +30,7 @@ struct StreamHandlerError {
 // OnListen() and OnCancel(). Implementations should ideally consume no
 // resources when the last such call is not OnListen(). In typical situations,
 // this means that the implementation should register itself with
-// platform-specific event sources OnListen() and deregister again OnCancel().
+// runtime-specific event sources OnListen() and deregister again OnCancel().
 template <typename T = EncodableValue>
 class StreamHandler {
  public:
