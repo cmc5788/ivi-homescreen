@@ -44,6 +44,8 @@ constexpr char kDefaultLocaleScriptCode[] = "";
 constexpr char kPathPrefix[] = PATH_PREFIX;
 constexpr char kFlutterAssetPath[] = "share/homescreen/bundle/flutter_assets";
 
+constexpr char kApplicationName[] = "homescreen";
+
 // Install path constants
 constexpr char kEnginePersistentCacheDir[] = ".homescreen";
 
